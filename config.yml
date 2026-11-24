@@ -1,0 +1,91 @@
+# Создать NPC: встань на место и напиши /hnpc spawn <id>   (id из секции npcs ниже)
+# Удалить: встань рядом (до 5 блоков) и /hnpc remove
+# После правки конфига: /hnpc reload  (уже стоящие NPC подхватят новые настройки)
+
+messages:
+  no-economy: "&cЭкономика не подключена (нужен Vault)."
+  not-enough-money: "&cНе хватает денег. Нужно: &e%price%"
+  bought: "&aКуплено: &f%item% &aза &e%price%"
+  sold: "&aПродано &f%amount% шт. &aза &e%money%"
+  nothing-to-sell: "&cУ тебя нет таких предметов."
+  tp-start: "&eТелепорт через &f%seconds% &eсек. Не двигайся!"
+  tp-tick: "&eТелепорт через &f%seconds% &eсек."
+  tp-moved: "&cТелепорт отменён: ты подвинулся."
+  tp-damage: "&cТелепорт отменён: ты получил урон."
+  tp-already: "&cОтсчёт уже идёт."
+  tp-done: "&aТелепорт выполнен!"
+  tp-error: "&cТочка телепорта не настроена (мир не найден)."
+  quiz-correct: "&aВерно! Ты получаешь награду."
+  quiz-wrong: "&cНеверно. Попробуй позже."
+  quiz-cooldown: "&eПодожди ещё %seconds% сек."
+  quiz-empty: "&cВопросов пока нет."
+
+npcs:
+
+  # ---------- СКУПЩИК ----------
+  # Открывается меню с предметами и ценами. Клик по предмету - продать ВСЁ такое из инвентаря.
+  # Кнопка внизу - продать всё из прайса. Продаются только обычные предметы (без чар/имени/износа).
+  skupshik:
+    type: BUYER
+    name: "&6&lСкупщик"
+    profession: nitwit
+    title: "&8Скупщик"
+    items:          # МАТЕРИАЛ: цена за 1 штуку (максимум 45 предметов)
+      DIAMOND: 100
+      EMERALD: 60
+      GOLD_INGOT: 15
+      IRON_INGOT: 8
+      COAL: 3
+      ROTTEN_FLESH: 1
+
+  # ---------- ПРОДАВЕЦ ----------
+  # Клик по предмету - купить (деньги списываются через Vault).
+  food_seller:
+    type: SELLER
+    name: "&a&lПродавец еды"
+    profession: farmer
+    title: "&8Продавец еды"
+    items:
+      - material: COOKED_BEEF
+        amount: 16
+        price: 80
+      - material: GOLDEN_CARROT
+        amount: 16
+        price: 120
+      - material: BREAD
+        amount: 16
+        price: 40
+
+  # ---------- ТЕЛЕПОРТ НА АРЕНУ ----------
+  arena:
+    type: TELEPORT
+    name: "&c&lАрена"
+    profession: weaponsmith
+    delay: 10                # секунд до телепорта
+    cancel-on-move: true     # отмена, если игрок сдвинулся
+    world: world
+    x: 0.5
+    y: 80
+    z: 0.5
+    yaw: 0
+    pitch: 0
+
+  # ---------- ВОПРОСЫ ----------
+  # answers: 2-4 варианта, correct: номер верного (с 0), commands: от консоли, %player% = ник
+  quiz:
+    type: QUIZ
+    name: "&b&lСтраж знаний"
+    profession: librarian
+    title: "&8Вопрос от стража"
+    cooldown-seconds: 60
+    questions:
+      - question: "Сколько блоков обсидиана нужно для рамки портала в Незер (минимум)?"
+        answers: ["10", "14", "12", "20"]
+        correct: 0
+        commands:
+          - "give %player% diamond 1"
+      - question: "Какой моб боится кошек?"
+        answers: ["Зомби", "Крипер", "Скелет", "Паук"]
+        correct: 1
+        commands:
+          - "give %player% golden_apple 2"

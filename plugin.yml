@@ -1,0 +1,17 @@
+name: HexaNpc
+version: 1.0
+main: hexatime.hexanpc.HexaNpc
+api-version: '1.21'
+softdepend: [Vault]
+description: NPC для HexaTime - скупщик, продавцы, телепорт на арену, вопросы
+commands:
+  hnpc:
+    description: Управление NPC
+    usage: /hnpc <spawn|remove|list|reload>
+    aliases: [npc]
+    permission: hexanpc.admin
+permissions:
+  hexanpc.admin:
+    default: op
+  hexanpc.use:
+    default: true
